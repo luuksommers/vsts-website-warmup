@@ -1,0 +1,74 @@
+{
+    "manifestVersion": 1,
+    "id": "webapp-warmup",
+    "name": "Webapp Warmup",
+    "version": "0.0.1",
+    "publisher": "luuksommers",
+    "public": true,
+    "helpMarkDown": "[More Information](https://github.com/luuksommers/vsts-webapp-warmup)",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "description": "This extension can do a website warmup",
+    "categories": [
+        "Build and release"
+    ],
+    "tags": [
+        "azure",
+        "webapp",
+        "warmup"
+    ],
+    "screenshots": [
+        
+    ],
+    "content": {
+        "details": {
+            "path": "readme.md"
+        },
+        "license": {
+            "path": "LICENSE"
+        }
+    },
+    "links": {
+        "getstarted": {
+            "uri": "https://github.com/luuksommers/vsts-webapp-warmup"
+        },
+        "support": {
+            "uri": "https://github.com/luuksommers/vsts-webapp-warmup"
+        }
+    },
+    "branding": {
+        "color": "rgb(255, 0, 105)",
+        "theme": "light"
+    },
+    "icons": {
+        "default": "images/icon.png"
+    },
+    "files": [
+        {
+            "path": "scripts"
+        },
+        {
+            "path": "images/icon.png",
+            "addressable": true
+        }
+    ],
+    "contributions": [
+        {
+            "id": "webapp-warmup",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "webapp-warmup"
+            }
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/luuksommers/vsts-webapp-warmup"
+    }
+}
