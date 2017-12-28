@@ -30,7 +30,7 @@
     ],
     "execution": {
         "PowerShell3": {
-            "target": "$(currentDirectory)\\run-vsts.ps1"
+            "target": "$(currentDirectory)\\scripts\\run-vsts.ps1"
         }
     }
 }
