@@ -3,7 +3,7 @@
     "id": "webapp-warmup",
     "name": "Webapp Warmup",
     "version": "0.0.1",
-    "publisher": "luuksommers",
+    "publisher": "infocaster",
     "public": true,
     "helpMarkDown": "[More Information](https://github.com/luuksommers/vsts-webapp-warmup)",
     "targets": [
