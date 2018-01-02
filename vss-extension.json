@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "webapp-warmup",
     "name": "Webapp Warmup",
-    "version": "0.0.5",
+    "version": "0.0.9",
     "publisher": "infocaster",
     "public": true,
     "helpMarkDown": "[More Information](https://github.com/luuksommers/vsts-webapp-warmup)",
@@ -11,7 +11,7 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-    "description": "This extension can do a website warmup",
+    "description": "This extension does a website warmup. When the site is not available, it throws an exception.",
     "categories": [
         "Build and release"
     ],

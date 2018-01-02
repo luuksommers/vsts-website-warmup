@@ -13,7 +13,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 1
+        "Patch": 4
     },
     "demands": [
         "azureps"
@@ -30,7 +30,7 @@
     ],
     "execution": {
         "PowerShell3": {
-            "target": "$(currentDirectory)\\scripts\\run-vsts.ps1"
+            "target": "$(currentDirectory)\\run-vsts.ps1"
         }
     }
 }

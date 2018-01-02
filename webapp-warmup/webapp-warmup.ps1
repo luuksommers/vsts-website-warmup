@@ -13,9 +13,13 @@ for($tryIndex=0; $tryIndex -le 10; $tryIndex++){
         break;
     }
     catch{
-        Write-Host "Sleep + repeat"
+        Write-Debug "Sleep + repeat"
         Start-Sleep -s 1
     }
+}
+
+if($siteIsNotAlive){
+    throw $siteIsNotAlive
 }
 
 #url suffixes
