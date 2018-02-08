@@ -15,9 +15,6 @@
         "Minor": 0,
         "Patch": 4
     },
-    "demands": [
-        "azureps"
-    ],
     "minimumAgentVersion": "1.95.0",
     "inputs": [
         {
@@ -31,20 +28,23 @@
             "name": "RetryCount",
             "type": "string",
             "label": "Retry count",
+            "defaultValue": "10",
             "required": false,
-            "helpMarkDown": "Provide the number of retries (default 10)"
+            "helpMarkDown": "Provide the number of retries"
         },
         {
             "name": "SleepPeriod",
             "type": "string",
             "label": "Sleep period",
+            "defaultValue": "1",
             "required": false,
-            "helpMarkDown": "Provide the sleep period after failure before retry (default 1)"
+            "helpMarkDown": "Provide the sleep period in seconds after failure before retry"
         },
         {
             "name": "IgnoreError",
             "type": "boolean",
             "label": "Ignore errors",
+            "defaultValue": false,
             "required": false,
             "helpMarkDown": "Ignore when the website has an error and continue (default false)"
         },
@@ -53,12 +53,13 @@
             "type": "multiLine",
             "label": "Add multiple site suffixes to warmup (1 suffix per line)",
             "required": false,
+            "defaultValue": "/",
             "properties": {
                 "resizable": "true",
                 "rows": "10",
                 "maxLength": "5000"
             },
-            "helpMarkDown": "Ignore when the website has an error and continue (default '/')"
+            "helpMarkDown": "Ignore when the website has an error and continue"
         }
     ],
     "execution": {
