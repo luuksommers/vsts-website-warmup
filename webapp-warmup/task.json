@@ -26,6 +26,39 @@
             "label": "Url",
             "required": true,
             "helpMarkDown": "Provide the url to warmup"
+        },
+        {
+            "name": "RetryCount",
+            "type": "string",
+            "label": "Retry count",
+            "required": false,
+            "helpMarkDown": "Provide the number of retries (default 10)"
+        },
+        {
+            "name": "SleepPeriod",
+            "type": "string",
+            "label": "Sleep period",
+            "required": false,
+            "helpMarkDown": "Provide the sleep period after failure before retry (default 1)"
+        },
+        {
+            "name": "IgnoreError",
+            "type": "boolean",
+            "label": "Ignore errors",
+            "required": false,
+            "helpMarkDown": "Ignore when the website has an error and continue (default false)"
+        },
+        {
+            "name": "Suffixes",
+            "type": "multiLine",
+            "label": "Add multiple site suffixes to warmup (1 suffix per line)",
+            "required": false,
+            "properties": {
+                "resizable": "true",
+                "rows": "10",
+                "maxLength": "5000"
+            },
+            "helpMarkDown": "Ignore when the website has an error and continue (default '/')"
         }
     ],
     "execution": {

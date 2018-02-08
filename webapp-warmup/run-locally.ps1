@@ -1,4 +1,11 @@
 Write-Verbose "Entering script run-locally.ps1"
 
 $rootUrl = "https://google.com"
-.\webapp-warmup.ps1 -rootUrl $rootUrl
+$retryCount = 2
+$sleepPeriod = 1
+$ignoreError = $false
+$suffixes = "/
+/mail
+fail"
+
+.\webapp-warmup.ps1  -rootUrl $rootUrl -retryCount $retryCount -sleepPeriod $sleepPeriod -ignoreError $ignoreError -suffixes $suffixes
