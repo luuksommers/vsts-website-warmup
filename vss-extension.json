@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "webapp-warmup",
     "name": "Webapp Warmup",
-    "version": "0.0.9",
+    "version": "0.1.0",
     "publisher": "infocaster",
     "public": true,
     "helpMarkDown": "[More Information](https://github.com/luuksommers/vsts-webapp-warmup)",
@@ -18,7 +18,8 @@
     "tags": [
         "azure",
         "webapp",
-        "warmup"
+        "warmup",
+        "iis"
     ],
     "screenshots": [
         
