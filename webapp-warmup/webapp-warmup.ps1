@@ -12,6 +12,9 @@ param(
     [boolean]$ignoreError = $false,
 
     [Parameter()]
+    [boolean]$ignoreSslError = $false,
+
+    [Parameter()]
     [string]$suffixes = "/"
 )
 
@@ -20,6 +23,23 @@ Write-Debug "RetryCount= $retryCount"
 Write-Debug "SleepPeriod= $sleepPeriod"
 Write-Debug "IgnoreError= $ignoreError"
 Write-Debug "Suffixes= $suffixes"
+
+add-type @"
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+public class TrustAllCertsPolicy : ICertificatePolicy {
+    public bool CheckValidationResult(
+        ServicePoint srvPoint, X509Certificate certificate,
+        WebRequest request, int certificateProblem) {
+        return true;
+    }
+}
+"@
+
+if ($ignoreSslError)
+{
+    [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+}
 
 if(-not $suffixes) {
     $suffixes = "/"

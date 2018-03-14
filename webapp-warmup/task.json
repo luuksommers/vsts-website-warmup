@@ -49,6 +49,14 @@
             "helpMarkDown": "Ignore when the website has an error and continue (default false)"
         },
         {
+            "name": "IgnoreSslError",
+            "type": "boolean",
+            "label": "Ignore SSL errors",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Ignore certificate errors (default false)"
+        },
+        {
             "name": "Suffixes",
             "type": "multiLine",
             "label": "Add multiple site suffixes to warmup (1 suffix per line)",
