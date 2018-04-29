@@ -8,3 +8,4 @@ Warmup a website during deployment with VSTS. Using this plugin you'll have full
 - Configurable retry count and times
 - Throw exception when statuscode is not succesfull
 - Awesome burning icon
+- Ignore SSL support (thanks to [PixelByProxy](https://github.com/PixelByProxy))
