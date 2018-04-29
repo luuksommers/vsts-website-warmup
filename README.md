@@ -7,3 +7,4 @@ Warmup a website during deployment with VSTS. Using this plugin you'll have full
 - Multiple relative paths
 - Configurable retry count and times
 - Throw exception when statuscode is not succesfull
+- Awesome burning icon

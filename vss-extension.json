@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "webapp-warmup",
     "name": "Webapp Warmup",
-    "version": "0.1.2",
+    "version": "0.1.5",
     "publisher": "infocaster",
     "public": true,
     "helpMarkDown": "[More Information](https://github.com/luuksommers/vsts-webapp-warmup)",
@@ -22,7 +22,9 @@
         "iis"
     ],
     "screenshots": [
-        
+        {
+            "path": "images/screenshot-1.png"
+        }
     ],
     "content": {
         "details": {
@@ -41,11 +43,11 @@
         }
     },
     "branding": {
-        "color": "rgb(255, 200, 0)",
+        "color": "rgb(6, 6, 6)",
         "theme": "dark"
     },
     "icons": {
-        "default": "images/icon.png"
+        "default": "images/logo.png"
     },
     "files": [
         {
