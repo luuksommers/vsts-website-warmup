@@ -24,6 +24,9 @@ Write-Debug "SleepPeriod= $sleepPeriod"
 Write-Debug "IgnoreError= $ignoreError"
 Write-Debug "Suffixes= $suffixes"
 
+$AllProtocols = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12'
+[System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols
+
 add-type @"
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
