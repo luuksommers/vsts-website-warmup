@@ -15,7 +15,13 @@ param(
     [boolean]$ignoreSslError = $false,
 
     [Parameter()]
-    [string]$suffixes = "/"
+    [string]$suffixes = "/",
+
+    [Parameter()]
+    [string]$basicAuthUser = $null,
+
+    [Parameter()]
+    [SecureString]$basicAuthPassword = $null
 )
 
 Write-Debug "RootUrl= $rootUrl"
@@ -23,7 +29,9 @@ Write-Debug "RetryCount= $retryCount"
 Write-Debug "SleepPeriod= $sleepPeriod"
 Write-Debug "IgnoreError= $ignoreError"
 Write-Debug "Suffixes= $suffixes"
+Write-Debug "BasicAuthUser= $basicAuthUser"
 
+# ----------------------------------- IGNORE SSL -----------------------------------
 $AllProtocols = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12'
 [System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols
 
@@ -44,6 +52,49 @@ if ($ignoreSslError)
     [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 }
 
+# ----------------------------------- BASIC AUTH -----------------------------------
+
+# http://blog.majcica.com/2015/11/17/powershell-tips-and-tricks-decoding-securestring/
+function Get-PlainText()
+{
+	[CmdletBinding()]
+	param
+	(
+		[parameter(Mandatory = $true)]
+		[System.Security.SecureString]$SecureString
+	)
+	BEGIN { }
+	PROCESS
+	{
+		$bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureString);
+ 
+		try
+		{
+			return [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr);
+		}
+		finally
+		{
+			[Runtime.InteropServices.Marshal]::FreeBSTR($bstr);
+		}
+	}
+	END { }
+}
+
+$Headers = @{}
+if(-not [string]::IsNullOrEmpty($basicAuthUser)){
+
+    $pw = Get-PlainText $basicAuthPassword
+    $pair = "$($basicAuthUser):$($pw)"
+$pair
+    $encodedCreds = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($pair))
+    
+    $basicAuthValue = "Basic $encodedCreds"
+    
+    $Headers = @{
+        Authorization = $basicAuthValue
+    }
+}
+
 if(-not $suffixes) {
     $suffixes = "/"
 }
@@ -60,7 +111,7 @@ if(-not $suffixes) {
     $time =  Measure-Command {
         for($tryIndex=0; $tryIndex -le $retryCount; $tryIndex++){  
             try{
-                Invoke-WebRequest $url -UseBasicParsing -ErrorAction Stop -ErrorVariable siteIsNotAlive
+                Invoke-WebRequest $url -UseBasicParsing -ErrorAction Stop -ErrorVariable siteIsNotAlive -Headers $Headers
                 break;
             }
             catch{
@@ -80,7 +131,3 @@ if(-not $suffixes) {
         Write-Host "Site is running in $($time.TotalSeconds) seconds"
     }
 }
-
-
-
-
