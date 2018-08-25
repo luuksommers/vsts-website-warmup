@@ -1,11 +1,11 @@
 {
     "manifestVersion": 1,
-    "id": "webapp-warmup",
-    "name": "Webapp Warmup",
+    "id": "website-warmup",
+    "name": "Website Warmup",
     "version": "0.3.0",
-    "publisher": "infocaster",
+    "publisher": "luuksommers",
     "public": true,
-    "helpMarkDown": "[More Information](https://github.com/luuksommers/vsts-webapp-warmup)",
+    "helpMarkDown": "[More Information](https://github.com/luuksommers/vsts-website-warmup)",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
@@ -36,10 +36,10 @@
     },
     "links": {
         "getstarted": {
-            "uri": "https://github.com/luuksommers/vsts-webapp-warmup"
+            "uri": "https://github.com/luuksommers/vsts-website-warmup"
         },
         "support": {
-            "uri": "https://github.com/luuksommers/vsts-webapp-warmup"
+            "uri": "https://github.com/luuksommers/vsts-website-warmup"
         }
     },
     "branding": {
@@ -51,23 +51,23 @@
     },
     "files": [
         {
-            "path": "webapp-warmup"
+            "path": "website-warmup"
         }
     ],
     "contributions": [
         {
-            "id": "webapp-warmup",
+            "id": "website-warmup",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "webapp-warmup"
+                "name": "website-warmup"
             }
         }
     ],
     "repository": {
         "type": "git",
-        "uri": "https://github.com/luuksommers/vsts-webapp-warmup"
+        "uri": "https://github.com/luuksommers/vsts-website-warmup"
     }
 }
