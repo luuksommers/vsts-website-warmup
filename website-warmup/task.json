@@ -13,7 +13,7 @@
     "version": {
         "Major": 1,
         "Minor": 2,
-        "Patch": 0
+        "Patch": 1
     },
     "minimumAgentVersion": "1.95.0",
     "inputs": [
@@ -70,14 +70,14 @@
             "helpMarkDown": "Ignore when the website has an error and continue"
         },
         {
-            "name": "basicAuthUser",
+            "name": "BasicAuthUser",
             "type": "string",
             "label": "Basic Auth User",
             "required": false,
             "helpMarkDown": "Provide the basic auth username"
         },
         {
-            "name": "basicAuthPassword",
+            "name": "BasicAuthPassword",
             "type": "secureString",
             "label": "Basic Auth Password",
             "required": false,

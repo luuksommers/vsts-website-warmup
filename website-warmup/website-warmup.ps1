@@ -111,7 +111,7 @@ if(-not $suffixes) {
     $time =  Measure-Command {
         for($tryIndex=0; $tryIndex -le $retryCount; $tryIndex++){  
             try{
-                Invoke-WebRequest $url -UseBasicParsing -ErrorAction Stop -ErrorVariable siteIsNotAlive -Headers $Headers
+                Invoke-WebRequest $SolrUrl -UseBasicParsing -ErrorAction Stop
                 break;
             }
             catch{
