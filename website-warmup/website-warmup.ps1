@@ -21,7 +21,7 @@ param(
     [string]$basicAuthUser = $null,
 
     [Parameter()]
-    [SecureString]$basicAuthPassword = $null
+    [string]$basicAuthPassword = $null
 )
 
 Write-Debug "RootUrl= $rootUrl"
@@ -54,38 +54,11 @@ if ($ignoreSslError)
 
 # ----------------------------------- BASIC AUTH -----------------------------------
 
-# http://blog.majcica.com/2015/11/17/powershell-tips-and-tricks-decoding-securestring/
-function Get-PlainText()
-{
-	[CmdletBinding()]
-	param
-	(
-		[parameter(Mandatory = $true)]
-		[System.Security.SecureString]$SecureString
-	)
-	BEGIN { }
-	PROCESS
-	{
-		$bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureString);
- 
-		try
-		{
-			return [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr);
-		}
-		finally
-		{
-			[Runtime.InteropServices.Marshal]::FreeBSTR($bstr);
-		}
-	}
-	END { }
-}
-
 $Headers = @{}
 if(-not [string]::IsNullOrEmpty($basicAuthUser)){
 
-    $pw = Get-PlainText $basicAuthPassword
-    $pair = "$($basicAuthUser):$($pw)"
-$pair
+    $pair = "$($basicAuthUser):$($basicAuthPassword)"
+    
     $encodedCreds = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($pair))
     
     $basicAuthValue = "Basic $encodedCreds"
@@ -111,7 +84,7 @@ if(-not $suffixes) {
     $time =  Measure-Command {
         for($tryIndex=0; $tryIndex -le $retryCount; $tryIndex++){  
             try{
-                Invoke-WebRequest $SolrUrl -UseBasicParsing -ErrorAction Stop
+                Invoke-WebRequest $url -UseBasicParsing -ErrorAction silentlycontinue  -ErrorVariable siteIsNotAlive -Headers $Headers
                 break;
             }
             catch{

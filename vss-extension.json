@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "website-warmup",
     "name": "Website Warmup",
-    "version": "0.3.1",
+    "version": "0.3.4",
     "publisher": "luuksommers",
     "public": true,
     "helpMarkDown": "[More Information](https://github.com/luuksommers/vsts-website-warmup)",

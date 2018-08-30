@@ -13,7 +13,7 @@
     "version": {
         "Major": 1,
         "Minor": 2,
-        "Patch": 1
+        "Patch": 2
     },
     "minimumAgentVersion": "1.95.0",
     "inputs": [
@@ -78,7 +78,7 @@
         },
         {
             "name": "BasicAuthPassword",
-            "type": "secureString",
+            "type": "string",
             "label": "Basic Auth Password",
             "required": false,
             "helpMarkDown": "Provide the basic auth password"

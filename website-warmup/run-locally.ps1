@@ -8,13 +8,18 @@ $ignoreSslError = $false
 $suffixes = "/
 /mail
 fail"
+$basicAuthUser = ""
+$basicAuthPassword = ""
 
-.\website-warmup.ps1  -rootUrl $rootUrl -retryCount $retryCount -sleepPeriod $sleepPeriod -ignoreError $ignoreError -suffixes $suffixes -ignoreSslError $ignoreSslError
-
+# .\website-warmup.ps1  -rootUrl $rootUrl -retryCount $retryCount -sleepPeriod $sleepPeriod -ignoreError $ignoreError -suffixes $suffixes -ignoreSslError $ignoreSslError  -basicAuthUser $basicAuthUser -basicAuthPassword $basicAuthPassword
 
 $basicAuthUser = "guest"
-$basicAuthPassword = ConvertTo-SecureString -String "guest"  -AsPlainText -Force
-$rootUrl = "https://jigsaw.w3.org/HTTP/Basic"
+$basicAuthPassword = "guest"
+$rootUrl = "https://jigsaw.w3.org"
+$suffixes = "/HTTP/Basic/"
 
+.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -basicAuthUser $basicAuthUser -basicAuthPassword $basicAuthPassword
 
-.\website-warmup.ps1 -rootUrl $rootUrl -basicAuthUser $basicAuthUser -basicAuthPassword $basicAuthPassword
+$basicAuthPassword = "guest1"
+
+.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -basicAuthUser $basicAuthUser -basicAuthPassword $basicAuthPassword
