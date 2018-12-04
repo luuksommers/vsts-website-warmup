@@ -79,26 +79,25 @@ if(-not $suffixes) {
         $url = $rootUrl+"/" + $_;
     }
 
-    Write-Host "wget $url"
-
     $time =  Measure-Command {
-        for($tryIndex=0; $tryIndex -le $retryCount; $tryIndex++){  
+        for($tryIndex=1; $tryIndex -le $retryCount; $tryIndex++){  
             try{
-                Invoke-WebRequest $url -UseBasicParsing -ErrorAction silentlycontinue  -ErrorVariable siteIsNotAlive -Headers $Headers
+                Write-Host "Invoke-WebRequest $url"
+                Invoke-WebRequest $url -UseBasicParsing -ErrorAction silentlycontinue -ErrorVariable siteIsNotAlive -Headers $Headers
                 break;
             }
             catch{
-                Write-Debug "Sleep + repeat"
+                Write-Host "Sleep for $sleepPeriod x seconds"
                 Start-Sleep -s $sleepPeriod
+                Write-Host "Repeat $tryIndex / $retryCount"
             }
         }
     }
 
     if($siteIsNotAlive){
+        Write-Host "Site returned error after $retryCount tries and in $($time.TotalSeconds) seconds"
         if($ignoreError -eq $false) {
             throw $siteIsNotAlive
-        } else {
-             Write-Host "Site returned error after $retryCount tries and in $($time.TotalSeconds) seconds"
         }
     } else {
         Write-Host "Site is running in $($time.TotalSeconds) seconds"
