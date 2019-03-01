@@ -79,7 +79,7 @@
             "options": {
                 "basic": "basic",
                 "cred": "cred",
-                "none": "None"
+                "none": "none"
             },
             "helpMarkDown": "Optionally choose an authentification type."
         },
