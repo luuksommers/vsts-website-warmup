@@ -18,10 +18,13 @@ param(
     [string]$suffixes = "/",
 
     [Parameter()]
-    [string]$basicAuthUser = $null,
+    [string]$authMethod,
 
     [Parameter()]
-    [string]$basicAuthPassword = $null
+    [string]$user = $null,
+
+    [Parameter()]
+    [string]$password = $null
 )
 
 Write-Debug "RootUrl= $rootUrl"
@@ -29,7 +32,10 @@ Write-Debug "RetryCount= $retryCount"
 Write-Debug "SleepPeriod= $sleepPeriod"
 Write-Debug "IgnoreError= $ignoreError"
 Write-Debug "Suffixes= $suffixes"
-Write-Debug "BasicAuthUser= $basicAuthUser"
+Write-Debug "Auth Method= $authMethod"
+if(-not [string]::IsNullOrEmpty($user)){
+    Write-Debug "User= $user"
+}
 
 # ----------------------------------- IGNORE SSL -----------------------------------
 $AllProtocols = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12'
@@ -51,9 +57,28 @@ if ($ignoreSslError)
 {
     [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 }
+$Headers = @{}
+switch ($authMethod) {
+    "basic" {
+        if(-not [string]::IsNullOrEmpty($user)){
 
-# ----------------------------------- BASIC AUTH -----------------------------------
+            $pair = "$($user):$($password)"
+            
+            $encodedCreds = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($pair))
+            
+            $basicAuthValue = "Basic $encodedCreds"
+            
+            $Headers = @{
+                Authorization = $basicAuthValue
+            }
+        }
+      }
+    "cred" {
+        if(-not [string]::IsNullOrEmpty($user)){
 
+            $secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
+            $credential = New-Object System.Management.Automation.PSCredential($user, $secpasswd)
+        }
 $Headers = @{}
 if(-not [string]::IsNullOrEmpty($basicAuthUser)){
     $pair = "$($basicAuthUser):$($basicAuthPassword)"
@@ -62,6 +87,7 @@ if(-not [string]::IsNullOrEmpty($basicAuthUser)){
     $Headers = @{
         Authorization = $basicAuthValue
     }
+    Default {}
 }
 
 if(-not $suffixes) {
@@ -81,8 +107,13 @@ if(-not $suffixes) {
         for($tryIndex=1; $tryIndex -le $retryCount; $tryIndex++){  
             try{
                 Write-Host "Invoke-WebRequest $url, try $tryIndex / $retryCount"
-                Invoke-WebRequest $url -UseBasicParsing -Headers $Headers -TimeoutSec 600
-                $siteIsAlive = $true;
+                if ($authMethod -eq "cred") {
+                    Invoke-WebRequest $url -UseBasicParsing -Credential $credential -TimeoutSec 600
+                    $siteIsAlive = $true;
+                } else {
+                    Invoke-WebRequest $url -UseBasicParsing -Headers $Headers -TimeoutSec 600
+                    $siteIsAlive = $true;
+                }
                 break;
             }
             catch{

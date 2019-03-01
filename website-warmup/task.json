@@ -70,18 +70,34 @@
             "helpMarkDown": "Ignore when the website has an error and continue"
         },
         {
-            "name": "BasicAuthUser",
-            "type": "string",
-            "label": "Basic Auth User",
+            "name": "AuthMethod",
+            "type": "pickList",
+            "label": "Select authentication type",
             "required": false,
-            "helpMarkDown": "Provide the basic auth username"
+            "defaultValue": "none",
+            "groupName": "auth",
+            "options": {
+                "basic": "basic",
+                "cred": "cred",
+                "none": "None"
+            },
+            "helpMarkDown": "Optionally choose an authentification type."
         },
         {
-            "name": "BasicAuthPassword",
+            "name": "User",
             "type": "string",
-            "label": "Basic Auth Password",
+            "label": "Username",
             "required": false,
-            "helpMarkDown": "Provide the basic auth password"
+            "helpMarkDown": "Provide the username",
+            "groupName": "auth"
+        },
+        {
+            "name": "Password",
+            "type": "string",
+            "label": "Password",
+            "required": false,
+            "helpMarkDown": "Provide the password",
+            "groupName": "auth"
         }
     ],
     "instanceNameFormat": "Warmup website",
