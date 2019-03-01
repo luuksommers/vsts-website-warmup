@@ -24,8 +24,9 @@ $password = ""
 
 $user = "guest"
 $password = "guest"
-$rootUrl = "https://jigsaw.w3.org/"
-$suffixes = "/HTTP/Basic/"
+$rootUrl = "localhost"
+$suffixes = "/your/query/"
+#Mandentory
 $authMethod = "basic"
 
 .\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password
@@ -34,12 +35,15 @@ $password = "guest1"
 
 #.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password
 
+<#End Basic Security#>
+
 <#Credentials#>
 
 $user = "username"
 $password = "falsepassword"
 $rootUrl = "localhost"
 $suffixes = "/"
+#Mandentory
 $authMethod = "cred"
 
 .\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password

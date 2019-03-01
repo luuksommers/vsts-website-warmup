@@ -6,7 +6,7 @@ $sleepPeriod = Get-VstsInput -Name SleepPeriod -AsInt
 $ignoreError = Get-VstsInput -Name IgnoreError -AsBool
 $ignoreSslError = Get-VstsInput -Name IgnoreSslError -AsBool
 $suffixes = Get-VstsInput -Name Suffixes
-$authMethod = Get-VstsInput -Name Auth
+$authMethod = Get-VstsInput -Name AuthMethod
 $user = Get-VstsInput -Name User
 $password = Get-VstsInput -Name Password
 
