@@ -116,12 +116,19 @@ if(-not $suffixes) {
                 }
                 break;
             }
-            catch{
+            catch [System.Net.WebException] {
+                If ($_.Exception.Message) {
+                    Write-Warning $_.Exception.Message
+                }
                 Write-Host "Failed with errorcode $($_.Exception.Response.StatusCode.value__)."
                 if($tryIndex -lt $retryCount){
                     Write-Host "Sleep for $sleepPeriod seconds, before try $($tryIndex + 1) / $retryCount"
                     Start-Sleep -s $sleepPeriod
                 }
+                Write-Host ""
+            }
+            catch {
+                throw $_
             }
         }
     }
@@ -129,7 +136,7 @@ if(-not $suffixes) {
     if($siteIsAlive){
         Write-Host "Site is running in $($time.TotalSeconds) seconds"
     } else {
-        Write-Host "Site returned error after $retryCount tries and in $($time.TotalSeconds) seconds"
+        Write-Warning "Site returned error after $retryCount tries and in $($time.TotalSeconds) seconds!"
         if($ignoreError -eq $false) {
             throw $siteIsNotAlive
         }

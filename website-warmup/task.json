@@ -15,6 +15,7 @@
         "Minor": 2,
         "Patch": 4
     },
+    "preview": true,
     "minimumAgentVersion": "1.95.0",
     "inputs": [
         {
