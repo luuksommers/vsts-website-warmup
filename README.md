@@ -10,4 +10,4 @@ Warmup a website during deployment with VSTS. Using this plugin you'll have full
 - Awesome burning icon
 - Ignore SSL support (thanks to [PixelByProxy](https://github.com/PixelByProxy))
 - Support for basic auth websites
-- Support for credentials
+- Support for windows credentials
