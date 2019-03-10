@@ -24,7 +24,10 @@ param(
     [string]$user = $null,
 
     [Parameter()]
-    [string]$password = $null
+    [string]$password = $null,
+
+    [Parameter()]
+    [uint16]$timeout = 600
 )
 
 Write-Debug "RootUrl= $rootUrl"
@@ -57,7 +60,7 @@ if ($ignoreSslError)
 {
     [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 }
-$Headers = @{}
+# ----------------------------------- AUTH METHODS ---------------------------------
 switch ($authMethod) {
     "basic" {
         if(-not [string]::IsNullOrEmpty($user)){
@@ -79,15 +82,10 @@ switch ($authMethod) {
             $secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
             $credential = New-Object System.Management.Automation.PSCredential($user, $secpasswd)
         }
-$Headers = @{}
-if(-not [string]::IsNullOrEmpty($basicAuthUser)){
-    $pair = "$($basicAuthUser):$($basicAuthPassword)"
-    $encodedCreds = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($pair))
-    $basicAuthValue = "Basic $encodedCreds"
-    $Headers = @{
-        Authorization = $basicAuthValue
     }
-    Default {}
+    Default {
+        $Headers = @{}
+    }
 }
 
 if(-not $suffixes) {
@@ -108,10 +106,10 @@ if(-not $suffixes) {
             try{
                 Write-Host "Invoke-WebRequest $url, try $tryIndex / $retryCount"
                 if ($authMethod -eq "cred") {
-                    Invoke-WebRequest $url -UseBasicParsing -Credential $credential -TimeoutSec 600
+                    Invoke-WebRequest $url -UseBasicParsing -Credential $credential -TimeoutSec $timeout
                     $siteIsAlive = $true;
                 } else {
-                    Invoke-WebRequest $url -UseBasicParsing -Headers $Headers -TimeoutSec 600
+                    Invoke-WebRequest $url -UseBasicParsing -Headers $Headers -TimeoutSec $timeout
                     $siteIsAlive = $true;
                 }
                 break;
@@ -120,12 +118,10 @@ if(-not $suffixes) {
                 If ($_.Exception.Message) {
                     Write-Warning $_.Exception.Message
                 }
-                Write-Host "Failed with errorcode $($_.Exception.Response.StatusCode.value__)."
                 if($tryIndex -lt $retryCount){
                     Write-Host "Sleep for $sleepPeriod seconds, before try $($tryIndex + 1) / $retryCount"
                     Start-Sleep -s $sleepPeriod
                 }
-                Write-Host ""
             }
             catch {
                 throw $_
@@ -136,9 +132,9 @@ if(-not $suffixes) {
     if($siteIsAlive){
         Write-Host "Site is running in $($time.TotalSeconds) seconds"
     } else {
-        Write-Warning "Site returned error after $retryCount tries and in $($time.TotalSeconds) seconds!"
+        Write-Host "Site returned error after $retryCount tries and in $($time.TotalSeconds) seconds!"
         if($ignoreError -eq $false) {
-            throw $siteIsNotAlive
+            throw "Error warm-up $url"
         }
     }
 }

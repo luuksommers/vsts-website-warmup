@@ -13,7 +13,7 @@
     "version": {
         "Major": 1,
         "Minor": 2,
-        "Patch": 4
+        "Patch": 5
     },
     "preview": true,
     "minimumAgentVersion": "1.95.0",
@@ -71,7 +71,7 @@
             "helpMarkDown": "Ignore when the website has an error and continue"
         },
         {
-            "name": "AuthMethod",
+            "name": "Authentication",
             "type": "pickList",
             "label": "Select authentication type",
             "required": false,
@@ -79,7 +79,7 @@
             "groupName": "auth",
             "options": {
                 "basic": "basic",
-                "cred": "cred",
+                "cred": "win cred",
                 "none": "none"
             },
             "helpMarkDown": "Optionally choose an authentification type."
@@ -99,6 +99,14 @@
             "required": false,
             "helpMarkDown": "Provide the password",
             "groupName": "auth"
+        },
+        {
+            "name": "Timeout",
+            "type": "string",
+            "label": "Timeout",
+            "defaultValue": "600",
+            "required": false,
+            "helpMarkDown": "Timeout for requests in seconds"
         }
     ],
     "instanceNameFormat": "Warmup website",

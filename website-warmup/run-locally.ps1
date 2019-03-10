@@ -13,10 +13,9 @@ fail"
 $authMethod = "none"
 $user = ""
 $password = ""
+$timeout = 600
 
-
-
-.\website-warmup.ps1  -rootUrl $rootUrl -retryCount $retryCount -sleepPeriod $sleepPeriod -ignoreError $ignoreError -suffixes $suffixes -ignoreSslError $ignoreSslError -authMethod $authMethod  -user $user -password $password
+.\website-warmup.ps1 -rootUrl $rootUrl -retryCount $retryCount -sleepPeriod $sleepPeriod -ignoreError $ignoreError -suffixes $suffixes -ignoreSslError $ignoreSslError -authMethod $authMethod  -user $user -password $password -timeout $timeout
 
 <#End No Security#>
 
