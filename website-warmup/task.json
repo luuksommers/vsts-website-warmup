@@ -12,8 +12,8 @@
     "author": "Luuk Sommers",
     "version": {
         "Major": 1,
-        "Minor": 2,
-        "Patch": 5
+        "Minor": 4,
+        "Patch": 0
     },
     "preview": true,
     "minimumAgentVersion": "1.95.0",
@@ -78,9 +78,9 @@
             "defaultValue": "none",
             "groupName": "auth",
             "options": {
-                "basic": "basic",
-                "cred": "win cred",
-                "none": "none"
+                "basic": "Basic",
+                "cred": "Credentials",
+                "none": "None"
             },
             "helpMarkDown": "Optionally choose an authentification type."
         },
