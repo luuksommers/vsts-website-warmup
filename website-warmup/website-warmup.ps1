@@ -18,10 +18,16 @@ param(
     [string]$suffixes = "/",
 
     [Parameter()]
-    [string]$basicAuthUser = $null,
+    [string]$authMethod,
 
     [Parameter()]
-    [string]$basicAuthPassword = $null
+    [string]$user = $null,
+
+    [Parameter()]
+    [string]$password = $null,
+
+    [Parameter()]
+    [uint16]$timeout = 600
 )
 
 Write-Debug "RootUrl= $rootUrl"
@@ -29,7 +35,10 @@ Write-Debug "RetryCount= $retryCount"
 Write-Debug "SleepPeriod= $sleepPeriod"
 Write-Debug "IgnoreError= $ignoreError"
 Write-Debug "Suffixes= $suffixes"
-Write-Debug "BasicAuthUser= $basicAuthUser"
+Write-Debug "Auth Method= $authMethod"
+if(-not [string]::IsNullOrEmpty($user)){
+    Write-Debug "User= $user"
+}
 
 # ----------------------------------- IGNORE SSL -----------------------------------
 $AllProtocols = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12'
@@ -51,16 +60,31 @@ if ($ignoreSslError)
 {
     [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 }
+# ----------------------------------- AUTH METHODS ---------------------------------
+switch ($authMethod) {
+    "basic" {
+        if(-not [string]::IsNullOrEmpty($user)){
 
-# ----------------------------------- BASIC AUTH -----------------------------------
+            $pair = "$($user):$($password)"
+            
+            $encodedCreds = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($pair))
+            
+            $basicAuthValue = "Basic $encodedCreds"
+            
+            $Headers = @{
+                Authorization = $basicAuthValue
+            }
+        }
+      }
+    "cred" {
+        if(-not [string]::IsNullOrEmpty($user)){
 
-$Headers = @{}
-if(-not [string]::IsNullOrEmpty($basicAuthUser)){
-    $pair = "$($basicAuthUser):$($basicAuthPassword)"
-    $encodedCreds = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($pair))
-    $basicAuthValue = "Basic $encodedCreds"
-    $Headers = @{
-        Authorization = $basicAuthValue
+            $secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
+            $credential = New-Object System.Management.Automation.PSCredential($user, $secpasswd)
+        }
+    }
+    Default {
+        $Headers = @{}
     }
 }
 
@@ -81,16 +105,26 @@ if(-not $suffixes) {
         for($tryIndex=1; $tryIndex -le $retryCount; $tryIndex++){  
             try{
                 Write-Host "Invoke-WebRequest $url, try $tryIndex / $retryCount"
-                Invoke-WebRequest $url -UseBasicParsing -Headers $Headers -TimeoutSec 600
-                $siteIsAlive = $true;
+                if ($authMethod -eq "cred") {
+                    Invoke-WebRequest $url -UseBasicParsing -Credential $credential -TimeoutSec $timeout
+                    $siteIsAlive = $true;
+                } else {
+                    Invoke-WebRequest $url -UseBasicParsing -Headers $Headers -TimeoutSec $timeout
+                    $siteIsAlive = $true;
+                }
                 break;
             }
-            catch{
-                Write-Host "Failed with errorcode $($_.Exception.Response.StatusCode.value__)."
+            catch [System.Net.WebException] {
+                If ($_.Exception.Message) {
+                    Write-Warning $_.Exception.Message
+                }
                 if($tryIndex -lt $retryCount){
                     Write-Host "Sleep for $sleepPeriod seconds, before try $($tryIndex + 1) / $retryCount"
                     Start-Sleep -s $sleepPeriod
                 }
+            }
+            catch {
+                throw $_
             }
         }
     }
@@ -98,9 +132,9 @@ if(-not $suffixes) {
     if($siteIsAlive){
         Write-Host "Site is running in $($time.TotalSeconds) seconds"
     } else {
-        Write-Host "Site returned error after $retryCount tries and in $($time.TotalSeconds) seconds"
+        Write-Host "Site returned error after $retryCount tries and in $($time.TotalSeconds) seconds!"
         if($ignoreError -eq $false) {
-            throw $siteIsNotAlive
+            throw "Error warm-up $url"
         }
     }
 }

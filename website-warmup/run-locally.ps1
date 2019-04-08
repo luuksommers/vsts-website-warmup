@@ -1,5 +1,7 @@
 Write-Verbose "Entering script run-locally.ps1"
 
+<#No Security#>
+
 $rootUrl = "https://google.com"
 $retryCount = 2
 $sleepPeriod = 1
@@ -8,18 +10,45 @@ $ignoreSslError = $false
 $suffixes = "/
 /mail
 fail"
-$basicAuthUser = ""
-$basicAuthPassword = ""
+$authMethod = "none"
+$user = ""
+$password = ""
+$timeout = 600
 
-# .\website-warmup.ps1  -rootUrl $rootUrl -retryCount $retryCount -sleepPeriod $sleepPeriod -ignoreError $ignoreError -suffixes $suffixes -ignoreSslError $ignoreSslError  -basicAuthUser $basicAuthUser -basicAuthPassword $basicAuthPassword
+.\website-warmup.ps1 -rootUrl $rootUrl -retryCount $retryCount -sleepPeriod $sleepPeriod -ignoreError $ignoreError -suffixes $suffixes -ignoreSslError $ignoreSslError -authMethod $authMethod  -user $user -password $password -timeout $timeout
 
-$basicAuthUser = "guest"
-$basicAuthPassword = "guest"
-$rootUrl = "https://jigsaw.w3.org"
-$suffixes = "/HTTP/Basic/"
+<#End No Security#>
 
-.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -basicAuthUser $basicAuthUser -basicAuthPassword $basicAuthPassword
+<#Basic Sercurity#>
 
-$basicAuthPassword = "guest1"
+$user = "guest"
+$password = "guest"
+$rootUrl = "localhost"
+$suffixes = "/your/query/"
+#Mandentory
+$authMethod = "basic"
 
-.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -basicAuthUser $basicAuthUser -basicAuthPassword $basicAuthPassword
+.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password
+
+$password = "guest1"
+
+#.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password
+
+<#End Basic Security#>
+
+<#Credentials#>
+
+$user = "username"
+$password = "falsepassword"
+$rootUrl = "localhost"
+$suffixes = "/"
+#Mandentory
+$authMethod = "cred"
+
+.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password
+
+$password = "yourpassword"
+
+.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password
+
+<#End Credentials#>
