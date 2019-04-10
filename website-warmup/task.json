@@ -13,10 +13,17 @@
     "version": {
         "Major": 1,
         "Minor": 4,
-        "Patch": 0
+        "Patch": 1
     },
-    "preview": true,
+    "preview": false,
     "minimumAgentVersion": "1.95.0",
+    "groups": [
+        {
+            "name":"auth",
+            "displayName":"Authorization",
+            "isExpanded":true
+        }
+    ],
     "inputs": [
         {
             "name": "Url",
