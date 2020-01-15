@@ -96,6 +96,8 @@ if(-not $suffixes) {
 ($suffixes -split '[\r\n]') | ForEach-Object{
     if($_.StartsWith("/","CurrentCultureIgnoreCase")){
         $url = $rootUrl+$_;
+    } elseif($_.StartsWith(":","CurrentCultureIgnoreCase")){
+        $url = $rootUrl+$_;
     } else {
         $url = $rootUrl+"/" + $_;
     }
