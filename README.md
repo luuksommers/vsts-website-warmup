@@ -11,3 +11,4 @@ Warmup a website during deployment with VSTS. Using this plugin you'll have full
 - Ignore SSL support (thanks to [PixelByProxy](https://github.com/PixelByProxy))
 - Support for basic auth websites
 - Support for windows credentials (thanks to [elgorro](https://github.com/elgorro))
+- Support for custom port numbers (thanks to [DLHForsberg](https://github.com/DLHForsberg))
