@@ -11,9 +11,9 @@
     ],
     "author": "Luuk Sommers",
     "version": {
-        "Major": 1,
-        "Minor": 4,
-        "Patch": 2
+        "Major": 2,
+        "Minor": 0,
+        "Patch": 0
     },
     "preview": false,
     "minimumAgentVersion": "1.95.0",
