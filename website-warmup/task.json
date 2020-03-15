@@ -26,11 +26,17 @@
     ],
     "inputs": [
         {
-            "name": "Url",
-            "type": "string",
-            "label": "Url",
+            "name": "Urls",
+            "type": "multiLine",
+            "label": "Add 1 or more Root URLs to warmup (1 Root URL per line)",
             "required": true,
-            "helpMarkDown": "Provide the url of the website to warmup"
+            "defaultValue": "/",
+            "properties": {
+                "resizable": "true",
+                "rows": "10",
+                "maxLength": "5000"
+            },
+            "helpMarkDown": "Provide the url(s) of the website to warmup"
         },
         {
             "name": "RetryCount",

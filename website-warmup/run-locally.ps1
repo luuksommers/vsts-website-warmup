@@ -1,54 +1,27 @@
 Write-Verbose "Entering script run-locally.ps1"
 
-<#No Security#>
+$authMethod = "none" # None, Basic, Cred
 
-$rootUrl = "https://google.com"
+# Variables for all Security Methods 
+# Mandatory
+$rootUrl = "https://google.com" 
+
+# Optional
+$suffixes = "/
+/mail
+fail" 
 $retryCount = 2
 $sleepPeriod = 1
 $ignoreError = $false
 $ignoreSslError = $false
-$suffixes = "/
-/mail
-fail"
-$authMethod = "none"
-$user = ""
-$password = ""
 $timeout = 600
 
-.\website-warmup.ps1 -rootUrl $rootUrl -retryCount $retryCount -sleepPeriod $sleepPeriod -ignoreError $ignoreError -suffixes $suffixes -ignoreSslError $ignoreSslError -authMethod $authMethod  -user $user -password $password -timeout $timeout
-
-<#End No Security#>
-
-<#Basic Sercurity#>
-
+# Variables for Basic or Cred Security
 $user = "guest"
 $password = "guest"
-$rootUrl = "localhost"
-$suffixes = "/your/query/"
-#Mandentory
-$authMethod = "basic"
 
-.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password
+# Run warm up locally with all switches
+.\website-warmup.ps1 -rootUrl $rootUrl -retryCount $retryCount -sleepPeriod $sleepPeriod -ignoreError $ignoreError -suffixes $suffixes -ignoreSslError $ignoreSslError -authMethod $authMethod -user $user -password $password -timeout $timeout
 
-$password = "guest1"
-
+# Example command with limited switches
 #.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password
-
-<#End Basic Security#>
-
-<#Credentials#>
-
-$user = "username"
-$password = "falsepassword"
-$rootUrl = "localhost"
-$suffixes = "/"
-#Mandentory
-$authMethod = "cred"
-
-.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password
-
-$password = "yourpassword"
-
-.\website-warmup.ps1 -rootUrl $rootUrl -suffixes $suffixes -authMethod $authMethod -user $user -password $password
-
-<#End Credentials#>
