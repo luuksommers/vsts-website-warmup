@@ -2,7 +2,7 @@
     "id": "11a6dcc5-6209-4a5b-b314-d593de2e8125",
     "name": "Website Warmup",
     "friendlyName": "Website Warmup",
-    "description": "This task warms-up an website by calling it's url",
+    "description": "This task warms up a website by calling its url",
     "helpMarkDown": "[More Information](https://github.com/luuksommers/vsts-website-warmup)",
     "category": "Deploy",
     "visibility": [
@@ -95,7 +95,7 @@
                 "cred": "Credentials",
                 "none": "None"
             },
-            "helpMarkDown": "Optionally choose an authentification type."
+            "helpMarkDown": "Optionally choose an authentication type."
         },
         {
             "name": "User",
