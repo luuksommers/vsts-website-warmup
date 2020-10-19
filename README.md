@@ -2,6 +2,14 @@
 
 Warmup a website during deployment with VSTS. Using this plugin you'll have full control on how to warmup your website.
 
+## Changes 1.1.1
+
+- Fix spelling mistakes (thanks to [MelGrubb](https://github.com/MelGrubb))
+
+## Changes 1.1.0
+
+- Updated VstsTasksSdk to version 0.11.0
+
 ## Key features
 
 - Multiple relative paths
