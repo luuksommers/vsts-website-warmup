@@ -117,6 +117,7 @@ if(-not $suffixes) {
                 }
                 $siteIsAliveCount++;
                 if($siteIsAliveCount -ge $successCount){
+                    Write-Host "Site is up, check $($siteIsAliveCount) / $($successCount)."
                     break;
                 } else {
                     Write-Host "Site is up, check $($siteIsAliveCount) / $($successCount), will do another check."
@@ -131,7 +132,7 @@ if(-not $suffixes) {
                     Write-Host "Sleep for $sleepPeriod seconds, before try $($tryIndex + 1) / $retryCount"
                     Start-Sleep -s $sleepPeriod
                 }
-                $siteIsAliveCount--
+                $siteIsAliveCount = 0
             }
             catch {
                 throw $_

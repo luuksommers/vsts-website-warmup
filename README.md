@@ -2,6 +2,10 @@
 
 Warmup a website during deployment with VSTS. Using this plugin you'll have full control on how to warmup your website.
 
+## Changes 1.2.1
+
+- Fixed bug in success count [#19](https://github.com/luuksommers/vsts-website-warmup/issues/19)
+
 ## Changes 1.2.0
 
 - Added success count, you can now setup the nummer of successfull attempts needed (default: 1)
